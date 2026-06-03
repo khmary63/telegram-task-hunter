@@ -94,7 +94,8 @@ function LeadsPage() {
   const toggle = async (lead: Lead, field: "is_read" | "is_starred") => {
     const next = !lead[field];
     setLeads((prev) => prev.map((l) => (l.id === lead.id ? { ...l, [field]: next } : l)));
-    await supabase.from("leads").update({ [field]: next }).eq("id", lead.id);
+    const patch = field === "is_read" ? { is_read: next } : { is_starred: next };
+    await supabase.from("leads").update(patch).eq("id", lead.id);
   };
 
   const exportCsv = () => {
