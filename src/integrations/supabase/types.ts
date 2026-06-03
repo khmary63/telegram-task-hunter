@@ -14,7 +14,245 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      chat_suggestions: {
+        Row: {
+          first_seen_at: string
+          id: string
+          last_seen_at: string
+          mentions_count: number
+          source_chat: string | null
+          status: string
+          username: string
+        }
+        Insert: {
+          first_seen_at?: string
+          id?: string
+          last_seen_at?: string
+          mentions_count?: number
+          source_chat?: string | null
+          status?: string
+          username: string
+        }
+        Update: {
+          first_seen_at?: string
+          id?: string
+          last_seen_at?: string
+          mentions_count?: number
+          source_chat?: string | null
+          status?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      chats: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          joined_at: string | null
+          niche_id: string | null
+          tg_chat_id: number | null
+          title: string | null
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          joined_at?: string | null
+          niche_id?: string | null
+          tg_chat_id?: number | null
+          title?: string | null
+          username: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          joined_at?: string | null
+          niche_id?: string | null
+          tg_chat_id?: number | null
+          title?: string | null
+          username?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chats_niche_id_fkey"
+            columns: ["niche_id"]
+            isOneToOne: false
+            referencedRelation: "niches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      keywords: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          niche_id: string | null
+          phrase: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          niche_id?: string | null
+          phrase: string
+          type?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          niche_id?: string | null
+          phrase?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "keywords_niche_id_fkey"
+            columns: ["niche_id"]
+            isOneToOne: false
+            referencedRelation: "niches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          author_display_name: string | null
+          author_user_id: number | null
+          author_username: string | null
+          chat_id: string | null
+          chat_title: string | null
+          chat_username: string | null
+          found_at: string
+          id: string
+          is_read: boolean
+          is_starred: boolean
+          matched_keyword_id: string | null
+          matched_niche_id: string | null
+          matched_phrase: string | null
+          message_link: string | null
+          message_text: string
+          notes: string | null
+          posted_at: string
+          tg_chat_id: number
+          tg_message_id: number
+        }
+        Insert: {
+          author_display_name?: string | null
+          author_user_id?: number | null
+          author_username?: string | null
+          chat_id?: string | null
+          chat_title?: string | null
+          chat_username?: string | null
+          found_at?: string
+          id?: string
+          is_read?: boolean
+          is_starred?: boolean
+          matched_keyword_id?: string | null
+          matched_niche_id?: string | null
+          matched_phrase?: string | null
+          message_link?: string | null
+          message_text: string
+          notes?: string | null
+          posted_at: string
+          tg_chat_id: number
+          tg_message_id: number
+        }
+        Update: {
+          author_display_name?: string | null
+          author_user_id?: number | null
+          author_username?: string | null
+          chat_id?: string | null
+          chat_title?: string | null
+          chat_username?: string | null
+          found_at?: string
+          id?: string
+          is_read?: boolean
+          is_starred?: boolean
+          matched_keyword_id?: string | null
+          matched_niche_id?: string | null
+          matched_phrase?: string | null
+          message_link?: string | null
+          message_text?: string
+          notes?: string | null
+          posted_at?: string
+          tg_chat_id?: number
+          tg_message_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_chat_id_fkey"
+            columns: ["chat_id"]
+            isOneToOne: false
+            referencedRelation: "chats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_matched_keyword_id_fkey"
+            columns: ["matched_keyword_id"]
+            isOneToOne: false
+            referencedRelation: "keywords"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_matched_niche_id_fkey"
+            columns: ["matched_niche_id"]
+            isOneToOne: false
+            referencedRelation: "niches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      niches: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      worker_state: {
+        Row: {
+          id: number
+          last_error: string | null
+          last_heartbeat: string | null
+          leads_found: number
+          messages_processed: number
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          last_error?: string | null
+          last_heartbeat?: string | null
+          leads_found?: number
+          messages_processed?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          last_error?: string | null
+          last_heartbeat?: string | null
+          leads_found?: number
+          messages_processed?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
