@@ -1,0 +1,18 @@
+[Unit]
+Description=TG Lead Parser worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# ← замените на своего пользователя и путь к worker/
+User=ubuntu
+WorkingDirectory=/home/ubuntu/tg-lead-parser/worker
+ExecStart=/home/ubuntu/tg-lead-parser/worker/.venv/bin/python worker.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
