@@ -13,7 +13,6 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedStatusRouteImport } from './routes/_authenticated/status'
-import { Route as AuthenticatedRevealKeyRouteImport } from './routes/_authenticated/reveal-key'
 import { Route as AuthenticatedLeadsRouteImport } from './routes/_authenticated/leads'
 import { Route as AuthenticatedKeywordsRouteImport } from './routes/_authenticated/keywords'
 import { Route as AuthenticatedChatsRouteImport } from './routes/_authenticated/chats'
@@ -35,11 +34,6 @@ const IndexRoute = IndexRouteImport.update({
 const AuthenticatedStatusRoute = AuthenticatedStatusRouteImport.update({
   id: '/status',
   path: '/status',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedRevealKeyRoute = AuthenticatedRevealKeyRouteImport.update({
-  id: '/reveal-key',
-  path: '/reveal-key',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedLeadsRoute = AuthenticatedLeadsRouteImport.update({
@@ -64,7 +58,6 @@ export interface FileRoutesByFullPath {
   '/chats': typeof AuthenticatedChatsRoute
   '/keywords': typeof AuthenticatedKeywordsRoute
   '/leads': typeof AuthenticatedLeadsRoute
-  '/reveal-key': typeof AuthenticatedRevealKeyRoute
   '/status': typeof AuthenticatedStatusRoute
 }
 export interface FileRoutesByTo {
@@ -73,7 +66,6 @@ export interface FileRoutesByTo {
   '/chats': typeof AuthenticatedChatsRoute
   '/keywords': typeof AuthenticatedKeywordsRoute
   '/leads': typeof AuthenticatedLeadsRoute
-  '/reveal-key': typeof AuthenticatedRevealKeyRoute
   '/status': typeof AuthenticatedStatusRoute
 }
 export interface FileRoutesById {
@@ -84,28 +76,13 @@ export interface FileRoutesById {
   '/_authenticated/chats': typeof AuthenticatedChatsRoute
   '/_authenticated/keywords': typeof AuthenticatedKeywordsRoute
   '/_authenticated/leads': typeof AuthenticatedLeadsRoute
-  '/_authenticated/reveal-key': typeof AuthenticatedRevealKeyRoute
   '/_authenticated/status': typeof AuthenticatedStatusRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/auth'
-    | '/chats'
-    | '/keywords'
-    | '/leads'
-    | '/reveal-key'
-    | '/status'
+  fullPaths: '/' | '/auth' | '/chats' | '/keywords' | '/leads' | '/status'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/auth'
-    | '/chats'
-    | '/keywords'
-    | '/leads'
-    | '/reveal-key'
-    | '/status'
+  to: '/' | '/auth' | '/chats' | '/keywords' | '/leads' | '/status'
   id:
     | '__root__'
     | '/'
@@ -114,7 +91,6 @@ export interface FileRouteTypes {
     | '/_authenticated/chats'
     | '/_authenticated/keywords'
     | '/_authenticated/leads'
-    | '/_authenticated/reveal-key'
     | '/_authenticated/status'
   fileRoutesById: FileRoutesById
 }
@@ -154,13 +130,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStatusRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/reveal-key': {
-      id: '/_authenticated/reveal-key'
-      path: '/reveal-key'
-      fullPath: '/reveal-key'
-      preLoaderRoute: typeof AuthenticatedRevealKeyRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/leads': {
       id: '/_authenticated/leads'
       path: '/leads'
@@ -189,7 +158,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedChatsRoute: typeof AuthenticatedChatsRoute
   AuthenticatedKeywordsRoute: typeof AuthenticatedKeywordsRoute
   AuthenticatedLeadsRoute: typeof AuthenticatedLeadsRoute
-  AuthenticatedRevealKeyRoute: typeof AuthenticatedRevealKeyRoute
   AuthenticatedStatusRoute: typeof AuthenticatedStatusRoute
 }
 
@@ -197,7 +165,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedChatsRoute: AuthenticatedChatsRoute,
   AuthenticatedKeywordsRoute: AuthenticatedKeywordsRoute,
   AuthenticatedLeadsRoute: AuthenticatedLeadsRoute,
-  AuthenticatedRevealKeyRoute: AuthenticatedRevealKeyRoute,
   AuthenticatedStatusRoute: AuthenticatedStatusRoute,
 }
 
