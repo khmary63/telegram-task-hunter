@@ -383,6 +383,16 @@ async def main():
     )
     await S.client.start(phone=PHONE)
     log.info("Telegram client started")
+
+    # КРИТИЧЕСКИ ВАЖНО: get_dialogs() прогревает кэш диалогов на сервере Telegram.
+    # Без этого вызова Telethon может не получать NewMessage апдейты из чатов,
+    # даже если аккаунт в них состоит.
+    try:
+        dialogs = await S.client.get_dialogs(limit=None)
+        log.info(f"Primed dialog cache: {len(dialogs)} dialogs")
+    except Exception as e:
+        log.warning(f"get_dialogs failed: {e}")
+
     await ensure_joined_and_index()
     reload_config()
 
